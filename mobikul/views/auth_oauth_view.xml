@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="mobikul_oauth_provider_form" model="ir.ui.view">
+      <field name="name">mobikul.oauth.provider.form</field>
+      <field name="model">auth.oauth.provider</field>
+      <field name="inherit_id" ref="auth_oauth.view_oauth_provider_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//sheet" position="inside">
+            <group>
+                <field name="mobikul_oauth_ref_code" password="True"/>
+            </group>
+          </xpath>
+      </field>
+  </record>
+</odoo>

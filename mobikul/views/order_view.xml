@@ -1,0 +1,90 @@
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<odoo>
+
+
+    <record id="mobikul_sale_order_transaction_form" model="ir.ui.view">
+        <field name="name">mobikul.sale.order</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name='Transaction' string="Transactions">
+                    <group name="trn">
+                        <field name="transaction_ids"/>
+
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mobikul_acquirer_form" model="ir.ui.view">
+        <field name="name">mobikul.acquirer_form</field>
+        <field name="model">payment.acquirer</field>
+        <field name="inherit_id" ref="payment.acquirer_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name='mobikul' string="Mobikul">
+                    <group name="mobikul">
+                        <field name="is_mobikul_available"/>
+                        <field name="mobikul_reference_code" attrs="{'invisible': [('is_mobikul_available', '=', False)], 'required': [('is_mobikul_available', '=', True)]}" password="True"/>
+                        <field name="mobikul_extra_key" attrs="{'invisible': [('is_mobikul_available', '=', False)]}"/>
+                        <!-- <field name="mobikul_pre_msg" attrs="{'invisible': [('is_mobikul_available', '=', False)]}"/> -->
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mobikul_orders_filter_view" model="ir.ui.view">
+        <field name="name">sale.order.mobikul.search.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="From Mobikul-App" name="from_mobikul" domain="[('team_id.mobikul_ids', '!=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="mobikul_orders_action" model="ir.actions.act_window">
+        <field name="name">Mobikul Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in', ('sale', 'done'))]</field>
+        <field name="context">{'show_sale': True, 'search_default_from_mobikul': 1}</field>
+        <field name="search_view_id" ref="mobikul_orders_filter_view"/>
+        <field name="help">You don't have any confirmed order from the Mobikul App.</field>
+    </record>
+
+    <record id="mobikul_unpaid_orders_action" model="ir.actions.act_window">
+        <field name="name">Unpaid Mobikul Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'sent')]</field>
+        <field name="context">{'show_sale': True, 'search_default_from_mobikul': 1}</field>
+        <field name="search_view_id" ref="mobikul_orders_filter_view"/>
+        <field name="help">You don't have any unpaid order from the Mobikul App.</field>
+    </record>
+
+    <record id="mobikul_abandonned_orders_action" model="ir.actions.act_window">
+        <field name="name">Cancelled Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'cancel')]</field>
+        <field name="context">{'show_sale': True, 'search_default_from_mobikul': 1}</field>
+        <field name="search_view_id" ref="mobikul_orders_filter_view"/>
+        <field name="help">You don't have any cancelled order from the Mobikul App.</field>
+    </record>
+<!--
+    <record id="mobikul_action_invoices" model="ir.actions.act_window">
+        <field name="name">Invoices</field>
+        <field name="res_model">account.invoice</field>
+         <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('team_id.mobikul_ids', '!=', False)]</field>
+        <field name="view_id" ref="account.invoice_tree"/>
+        <field name="context">{'type':'out_invoice'}</field>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+    </record> -->
+</odoo>
