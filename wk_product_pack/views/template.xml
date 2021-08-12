@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <template id="product_inherited" inherit_id="website_sale.product">
+            <xpath expr="//div[@id='wrap']//div[hasclass('js_main_product')]" position="attributes" priority="16">
+                <attribute name="t-attf-class">js_product js_main_product #{'hide_variants' if product.is_pack else ''}</attribute>
+            </xpath>
+        </template>
+        <template id="wk_product_assets" inherit_id="web.assets_frontend">
+            <xpath expr="." position="inside">
+              <link rel="stylesheet" type="text/css" href="/wk_product_pack/static/src/scss/main.scss" />
+            </xpath>
+          </template>
+    </data>
+</odoo>
