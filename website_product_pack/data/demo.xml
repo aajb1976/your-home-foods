@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2019-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<odoo>
+    <data noupdate="1">
+
+
+        <record id="wk_product_pack.product_product_pack_1" model="product.product">
+         
+            <field name="website_published">True</field>
+        </record>
+        <record id="wk_product_pack.product_product_pack_2" model="product.product">
+             <field name="website_published">True</field>
+        </record>
+        <record id="wk_product_pack.product_product_pack_3" model="product.product">
+             <field name="website_published">True</field>
+        </record>
+        <record id="wk_product_pack.product_product_pack_4" model="product.product">
+             <field name="website_published">True</field>
+        </record>
+        <record id="wk_product_pack.product_product_pack_5" model="product.product">
+             <field name="website_published">True</field>
+        </record>
+
+        <record id="wk_product_pack.product_pack_one" model="product.template">
+             <field name="website_published">True</field>
+        </record>
+        <record id="wk_product_pack.product_pack_two" model="product.template">
+             <field name="website_published">True</field>
+        </record>
+
+     
+</data>
+</odoo>

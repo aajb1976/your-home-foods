@@ -1,0 +1,8 @@
+<odoo>
+    <data noupdate="1">
+        <record id="website_product_pack.pack_style" model="product.style">
+            <field name="name">Pack Product</field>
+            <field name="html_class">wk_bundle_product</field>
+        </record>			
+    </data>
+</odoo>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2019-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) -->
+<!-- See LICENSE file for full copyright and licensing details. -->
+<odoo>
+	<data>	
+		<template id="assets_frontend" name="website_ribbon_assets_frontend" inherit_id="website.assets_frontend">
+			<xpath expr="." position="inside">
+		        <link rel="stylesheet" href="/website_product_pack/static/src/css/website_product_pack.css"/>	
+		         <script type="text/javascript" src="/website_product_pack/static/src/js/website_pack_product.js"></script>	   
+		    </xpath>
+		</template>
+
+		<template id="website_product_pack_ribbon_wrapper" inherit_id="website_sale.products_item">
+			<xpath expr="//form//div[hasclass('o_wsale_product_information')]" position="after" >					
+				<div t-if="product.is_pack" class="wk_pack_product_wrapper">
+			    	<div class="wk_pack_ribbon">Pack</div>
+			 	 </div>
+			</xpath>
+		</template>
+
+		<template id="website_product_pack_save_price" inherit_id="website_sale.product_price" name="pack_save_price">
+			<xpath expr="//div/h4[hasclass('css_non_editable_mode_hidden')]" position="after" >
+				<t t-if="product.is_pack == True">
+					<button type="button" class="btn_modal_pack btn btn-info" data-toggle="modal" data-target="#open_products_modal">Pack Details</button>
+					<t t-set="remaning_amount"  t-value="product.get_discounted_pack_price(product.id)" />
+					<div t-if="remaning_amount &gt; 0" class="wk_price_save_cart btn-danger">
+						<span class="wk_span_save ">Saved</span>
+						<span t-esc="remaning_amount" style="white-space: nowrap;" t-options="{'widget': 'monetary','from_currency': product.currency_id, 'display_currency': website.currency_id}"/>
+					</div>
+				</t>
+				<div id="open_products_modal" class="modal fade" role="dialog">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+						<div class="modal-header btn btn-info">
+						<h4 class="modal-title text-center">DETAILS OF THE PRODUCTS IN PACK</h4>
+						<button type="button" class="btn btn-warning" data-dismiss="modal" style="cursor:pointer">X</button>
+						</div>
+						<div class="modal-body col-md-12" style="clear:both">
+							<t t-foreach="product.wk_product_pack" t-as="pack">
+							<div class="wk_modal_outer_div col-md-3">
+								<t t-set="pack_id" t-value="pack.get_product_id(pack.id)"/>
+								<t t-if="pack_id.product_id.website_published == True ">
+									<div class="image_div">
+										<a itemprop="url" t-att-href="keep('/shop/product/%s' % slug(pack_id.product_id.product_tmpl_id))">
+										<span  t-field="pack_id.wk_image" t-options='{"widget": "image", "class": "img-rounded"}'/>
+										</a>
+										<div class="wk_modal_text">
+										<a itemprop="url" t-att-href="keep('/shop/product/%s' % slug(pack_id.product_id.product_tmpl_id))">
+											<span style="display:block;color:#42A5F5;margin-bottom:6pxpx;margin-top:-10px" t-esc="pack_id.product_id.name"/>
+										</a>
+										Unit Price
+										<span t-field="pack_id.product_id.price" class="wk_pack_product_unit_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+										<div>
+											Quantity <span style="margin-left:10px; color:#B71C1C;" t-esc="pack.product_quantity"/>
+										</div>
+									</div>
+									</div>
+									
+								</t>
+								<t t-if="pack_id.product_id.website_published == False ">
+									<div class="image_div" style="opacity:0.3">
+										<span t-field="pack_id.wk_image" t-options='{"widget": "image", "class": "img-rounded"}'/>
+										<div class="wk_modal_text">
+										<span style="display:block;color:#BBDEFB;margin-bottom:6pxpx;margin-top:-10px" t-esc="pack_id.product_id.name"/>
+										Unit Price
+										<span t-esc="pack_id.product_id.lst_price" class="wk_pack_product_unit_price" t-options="{'widget': 'monetary','from_currency': product.currency_id, 'display_currency': website.currency_id}"/>
+											<div>Quantity
+											<span style="margin-left:10px; color:#B71C1C;" t-esc="pack.product_quantity"/>
+										</div>
+									</div>
+									</div>
+								</t>
+							</div>
+							</t>
+						</div> 
+						<div class="modal-footer">
+						</div>
+					 	</div>
+					</div>
+				</div>
+			</xpath>
+		</template>
+	</data>
+</odoo>

@@ -1,0 +1,96 @@
+/* Copyright (c) 2018-Present Webkul Software Pvt. Ltd. (<https://webkul.com/>) */
+    /* See LICENSE file for full copyright and licensing details. */
+.oe_product.wk_bundle_product .wk_pack_product_wrapper
+{  
+  display: block;
+}
+.wk_pack_product_wrapper
+{ 
+  width: 80px;
+  height: 80px;
+  z-index: 5;
+  overflow: hidden;
+  position: absolute;
+ 
+}
+.oe_product .wk_pack_ribbon
+{
+	font: bold 15px Sans-Serif;
+	color: white;
+	text-align: center;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	position: relative;
+	padding: 7px 0;
+	left: -37px;
+	top: 10px;
+	width: 137px;
+	cursor: default;
+	background-color:#c2185b;
+}
+
+/* .main_div_price_saved {
+	position:absolute;
+	height: 35px;
+	width:85px;
+	top:-6px;
+	text-align:center;
+	border-radius:5px;
+	background-color: #BA68C8;
+	color:white;
+	font-size: 12px;
+} */
+.wk_span_save{
+display:block;
+}
+.wk_price_save_cart 
+{
+    font-size: 12px;
+    width: 90px;
+    display: inline-block;
+	text-align: center;
+	position: relative;
+    bottom: -6px;
+}
+.product_image_modal
+{
+	height:80%;
+	width:80%;
+}
+.wk_modal_outer_div
+{
+ display: inline;
+ margin-top: 6%;
+}
+.wk_modal_text{
+	font-size: 14px;
+	color: black;
+    margin-top: 10px;
+}
+.wk_pack_product_unit_price{
+	white-space: nowrap;
+	color:#B71C1C;
+	margin-left:5px
+}
+.btn_modal_pack{
+
+	margin-bottom:5px;
+}
+.image_div
+{
+	height:150px;
+	width:150px;
+	display:inline-block;
+
+}
+.wk_alert_message{
+	cursor:pointer;
+	opacity: 0.6;
+}
+.wk_alert_message1111{
+	opacity:0.4 !important;
+	background-color: red;
+	display: inline !important;
+}

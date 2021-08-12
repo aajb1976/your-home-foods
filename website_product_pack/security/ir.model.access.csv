@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wk_product_pack_public_user,product.pack,model_product_pack,,1,0,0,0
+access_wk_product_template_public_user,product.template,model_product_template,base.group_public,1,0,0,0
+,,,,,,,
+access_wk_product_pack_portal_user,product.pack,model_product_pack,base.group_portal,1,0,0,0
