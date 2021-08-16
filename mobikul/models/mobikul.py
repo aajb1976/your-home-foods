@@ -258,6 +258,19 @@ class Mobikul(models.Model):
                 response['message'] = _('Login successfully.')
                 context.update({"partner": user.partner_id, "uid": user.id,
                                 "user": user, 'tz': user.tz})
+
+                """Pricelist Customization on basis of partner"""
+                pricelist_id = user.sudo().partner_id.property_product_pricelist
+                if pricelist_id:
+                    app_pricelist = self.env['product.pricelist'].sudo().browse(int(pricelist_id))
+                    context.update({ 
+                        "pricelist":app_pricelist,
+                        "currency_id": app_pricelist.currency_id.id,
+                        'currencySymbol': app_pricelist.currency_id.symbol or "",
+                        'currencyPosition': app_pricelist.currency_id.position or "",
+                        })
+                """Customization ends here"""
+
                 response["context"] = context
                 if self.check_mobikul_addons().get('wishlist'):
                     response['WishlistCount'] = len(user.partner_id.wishlist_ids)
