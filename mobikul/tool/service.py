@@ -196,15 +196,15 @@ class WebServices(Controller):
             Partner, mf) for mf in mandatory_fields]
         return all(val)
 
-    def _getAquirerCredentials(self, order_name, Acquirer, response):
+    def _getAquirerCredentials(self, order_name, Acquirer, response,txn):
         if Acquirer.mobikul_reference_code == 'COD':
             return {'status': True, 'code': 'COD', 'auth': False}
         elif Acquirer.mobikul_reference_code == 'STRIPE_W':
             Transaction = request.env['payment.transaction'].sudo()
-            return {'status': True, 'paymentReference': Transaction.get_next_reference(order_name), 'code': 'STRIPE', 'auth': True, 'secret_key': Acquirer.stripe_checkout_client_secret_key, 'publishable_key': Acquirer.stripe_checkout_publishable_key}
+            return {'status': True, 'paymentReference': txn.reference, 'code': 'STRIPE', 'auth': True, 'secret_key': Acquirer.stripe_checkout_client_secret_key, 'publishable_key': Acquirer.stripe_checkout_publishable_key}
         elif Acquirer.mobikul_reference_code == 'STRIPE_E':
             Transaction = request.env['payment.transaction'].sudo()
-            return {'status': True, 'paymentReference': Transaction.get_next_reference(order_name), 'code': 'STRIPE', 'auth': True, 'secret_key': Acquirer.stripe_secret_key, 'publishable_key': Acquirer.stripe_publishable_key}
+            return {'status': True, 'paymentReference': txn.reference, 'code': 'STRIPE', 'auth': True, 'secret_key': Acquirer.stripe_secret_key, 'publishable_key': Acquirer.stripe_publishable_key}
         else:
             return {'status': False, 'message': _('Payment Mode not Available.')}
 
@@ -272,13 +272,13 @@ class WebServices(Controller):
                         "discount": item.discount and "(%d%% OFF)" % item.discount or "",
                     }
                     result['items'].append(temp)
-            result['paymentData'] = self._getAquirerCredentials(last_order.name, Acquirer, response)
-            result['paymentData'].update({'customer_email': last_order.partner_id.email})
             vals = {
                 'acquirer_id': Acquirer.id,
                 'return_url': ''
             }
             txn = last_order._create_payment_transaction(vals)
+            result['paymentData'] = self._getAquirerCredentials(last_order.name, Acquirer, response,txn)
+            result['paymentData'].update({'customer_email': last_order.partner_id.email})
             result['transaction_id'] = txn.id
         else:
             result = {'success': False, 'message': _('Add some products in order to proceed.')}
