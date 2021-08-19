@@ -277,7 +277,7 @@ class WebServices(Controller):
                 'return_url': ''
             }
             txn = last_order._create_payment_transaction(vals)
-            result['paymentData'] = self._getAquirerCredentials(last_order.name, Acquirer, response,txn)
+            result['paymentData'] = self._getAquirerCredentials(last_order.name, Acquirer.sudo(), response,txn)
             result['paymentData'].update({'customer_email': last_order.partner_id.email})
             result['transaction_id'] = txn.id
         else:
