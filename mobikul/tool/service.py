@@ -20,7 +20,7 @@ import requests
 from odoo.http import request, Controller, route
 from odoo import _
 from odoo.http import request
-from odoo.addons.mobikul.tool.help import _displayWithCurrency, _get_image_url, remove_htmltags
+from odoo.addons.mobikul.tool.help import STATUS_MAPPING, _displayWithCurrency, _get_image_url, remove_htmltags
 import logging
 _logger = logging.getLogger(__name__)
 
