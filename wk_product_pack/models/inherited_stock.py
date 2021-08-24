@@ -51,10 +51,10 @@ class ProductTemplate(models.Model):
 								vir_avail.append(variants_available[pp.product_id.id]["virtual_available"]/pp.product_quantity)
 								inco_qty.append(variants_available[pp.product_id.id]["incoming_qty"]/pp.product_quantity)
 								outgo_qty.append(variants_available[pp.product_id.id]["outgoing_qty"]/pp.product_quantity)
-						qty_available = min(qty_avail)
-						virtual_available = min(vir_avail)
-						incoming_qty = min(inco_qty)
-						outgoing_qty = min(outgo_qty)
+						qty_available = qty_avail and min(qty_avail) or 0
+						virtual_available = vir_avail and  min(vir_avail) or 0
+						incoming_qty = inco_qty and min(inco_qty) or 0
+						outgoing_qty = outgo_qty and min(outgo_qty) or 0
 						template.product_variant_ids = ACT_VARIANTS
 				################################### CODE CLOSED BY JAHANGIR ####################################
 				prod_available[template.id].update({
