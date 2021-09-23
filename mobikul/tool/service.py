@@ -358,7 +358,10 @@ class WebServices(Controller):
 
             elif txn.state == 'done':
                 last_order.with_context(context).action_confirm()
-                txn._post_process_after_done()
+                try:
+                    txn._post_process_after_done()
+                except Exception as e:
+                    _logger.warning("Exception in Post Process %r",e)
                 last_order._send_order_confirmation_mail()
                 result.update({'txn_msg': remove_htmltags(txn.acquirer_id.done_msg)})
             else:
